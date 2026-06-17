@@ -17,30 +17,42 @@ const COLORS = [
 
 function PieChartComponent({ data }) {
   return (
-    <ResponsiveContainer width="100%" height={350}>
-      <PieChart>
+    <div className="w-full h-[250px] sm:h-[350px] md:h-[400px]">
+      <ResponsiveContainer width="100%" height="100%">
+        <PieChart>
+          <Pie
+            data={data}
+            dataKey="value"
+            nameKey="date"
+            cx="50%"
+            cy="45%"
+            outerRadius="70%"
+            label={({ name }) => name}
+          >
+            {data.map((entry, index) => (
+              <Cell
+                key={index}
+                fill={COLORS[index % COLORS.length]}
+              />
+            ))}
+          </Pie>
 
-        <Pie
-          data={data}
-          dataKey="value"
-          nameKey="date"
-          outerRadius={120}
-          label
-        >
-          {data.map((entry, index) => (
-            <Cell
-              key={index}
-              fill={COLORS[index % COLORS.length]}
-            />
-          ))}
-        </Pie>
+          <Tooltip
+            formatter={(value) =>
+              Number(value).toLocaleString()
+            }
+          />
 
-        <Legend />
-
-        <Tooltip />
-
-      </PieChart>
-    </ResponsiveContainer>
+          <Legend
+            verticalAlign="bottom"
+            height={36}
+            wrapperStyle={{
+              fontSize: "12px",
+            }}
+          />
+        </PieChart>
+      </ResponsiveContainer>
+    </div>
   );
 }
 
